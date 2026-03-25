@@ -45,8 +45,8 @@ const SearchView = () => {
             onClick={() => setGenre(g)}
             className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
               genre === g
-                ? "bg-primary text-primary-foreground neon-glow"
-                : "bg-muted text-muted-foreground hover:text-foreground hover:bg-surface-hover"
+                ? "bg-foreground text-background"
+                : "bg-secondary text-muted-foreground hover:text-foreground"
             }`}
           >
             {g}
