@@ -208,7 +208,7 @@ const Equalizer = () => {
       </div>
 
       {/* EQ Sliders */}
-      <div className="rounded-xl bg-card border border-border p-6">
+      <div className="rounded-2xl glass p-6">
         <div className="flex items-end justify-between gap-4">
           {EQ_BANDS.map((band, i) => (
             <div key={band.freq} className="flex flex-col items-center gap-3 flex-1">
