@@ -5,6 +5,7 @@ import HeroSection from "@/components/home/HeroSection";
 import TrackSection from "@/components/home/TrackSection";
 import SearchView from "@/components/home/SearchView";
 import LikedSongsView from "@/components/home/LikedSongsView";
+import Equalizer from "@/components/player/Equalizer";
 import { usePlayer } from "@/context/PlayerContext";
 
 const Index = () => {
@@ -25,6 +26,8 @@ const Index = () => {
         );
       case "liked":
         return <LikedSongsView />;
+      case "equalizer":
+        return <Equalizer />;
       case "library":
       case "playlists":
         return (
