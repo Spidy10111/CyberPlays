@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Sidebar, { MobileNav, MobileHeader, MobileSheet } from "@/components/layout/Sidebar";
+import Sidebar from "@/components/layout/Sidebar";
 import NowPlayingBar from "@/components/player/NowPlayingBar";
 import HeroSection from "@/components/home/HeroSection";
 import TrackSection from "@/components/home/TrackSection";
@@ -10,7 +10,6 @@ import { usePlayer } from "@/context/PlayerContext";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("home");
-  const [menuOpen, setMenuOpen] = useState(false);
   const { tracks, currentTrack } = usePlayer();
 
   const trending = [...tracks].sort((a, b) => b.plays - a.plays).slice(0, 5);
@@ -21,7 +20,7 @@ const Index = () => {
       case "search":
         return (
           <div>
-            <h2 className="text-2xl font-semibold text-foreground mb-6 tracking-tight">Search</h2>
+            <h2 className="font-display text-2xl font-bold text-foreground mb-6">Search</h2>
             <SearchView />
           </div>
         );
@@ -33,10 +32,10 @@ const Index = () => {
       case "playlists":
         return (
           <div>
-            <h2 className="text-2xl font-semibold text-foreground mb-6 tracking-tight">
+            <h2 className="font-display text-2xl font-bold text-foreground mb-6">
               {activeTab === "library" ? "Your Library" : "Playlists"}
             </h2>
-            <p className="text-muted-foreground text-sm">Coming soon — sign in to save your library.</p>
+            <p className="text-muted-foreground text-sm">Coming soon — connect a backend to save your library.</p>
           </div>
         );
       default:
@@ -53,26 +52,10 @@ const Index = () => {
   return (
     <div className="flex h-screen bg-background overflow-hidden">
       <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
-      
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <MobileHeader onMenuOpen={() => setMenuOpen(true)} />
-        
-        <main className={`flex-1 overflow-y-auto scrollbar-cyber p-4 md:p-8 ${
-          currentTrack ? "pb-32 md:pb-28" : "pb-20 md:pb-8"
-        }`}>
-          {renderContent()}
-        </main>
-      </div>
-
-      <MobileSheet
-        open={menuOpen}
-        onClose={() => setMenuOpen(false)}
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-      />
-
+      <main className={`flex-1 overflow-y-auto scrollbar-cyber p-6 md:p-8 ${currentTrack ? "pb-28" : ""}`}>
+        {renderContent()}
+      </main>
       <NowPlayingBar />
-      {currentTrack && <MobileNav activeTab={activeTab} onTabChange={setActiveTab} />}
     </div>
   );
 };

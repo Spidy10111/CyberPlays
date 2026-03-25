@@ -14,7 +14,7 @@ const TrackSection = ({ title, tracks }: TrackSectionProps) => {
       animate={{ opacity: 1, y: 0 }}
       className="mb-8"
     >
-      <h3 className="text-lg font-semibold text-foreground mb-4 tracking-tight">
+      <h3 className="font-display text-lg font-semibold text-foreground mb-4 tracking-wide">
         {title}
       </h3>
       <div className="space-y-1">
