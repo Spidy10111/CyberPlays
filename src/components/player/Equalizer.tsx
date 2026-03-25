@@ -171,7 +171,7 @@ const Equalizer = () => {
       </div>
 
       {/* Visualizer */}
-      <div className="rounded-xl bg-card border border-border p-4 neon-border">
+      <div className="rounded-2xl glass p-4">
         <canvas
           ref={canvasRef}
           width={600}
