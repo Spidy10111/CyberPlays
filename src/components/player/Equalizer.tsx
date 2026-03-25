@@ -38,18 +38,14 @@ const Equalizer = () => {
 
   const connectAudio = useCallback(() => {
     if (!audioElement || connectedRef.current) return;
-
     try {
       const ctx = new AudioContext();
       audioCtxRef.current = ctx;
-
       const source = ctx.createMediaElementSource(audioElement);
       sourceRef.current = source;
-
       const analyser = ctx.createAnalyser();
       analyser.fftSize = 256;
       analyserRef.current = analyser;
-
       const filters = EQ_BANDS.map((band, i) => {
         const filter = ctx.createBiquadFilter();
         filter.type = i === 0 ? "lowshelf" : i === EQ_BANDS.length - 1 ? "highshelf" : "peaking";
@@ -59,15 +55,10 @@ const Equalizer = () => {
         return filter;
       });
       filtersRef.current = filters;
-
-      // Chain: source -> filters -> analyser -> destination
       source.connect(filters[0]);
-      for (let i = 0; i < filters.length - 1; i++) {
-        filters[i].connect(filters[i + 1]);
-      }
+      for (let i = 0; i < filters.length - 1; i++) filters[i].connect(filters[i + 1]);
       filters[filters.length - 1].connect(analyser);
       analyser.connect(ctx.destination);
-
       connectedRef.current = true;
       setIsConnected(true);
     } catch (e) {
@@ -75,57 +66,38 @@ const Equalizer = () => {
     }
   }, [audioElement]);
 
-  // Connect when audio element is ready and playing
   useEffect(() => {
-    if (audioElement && isPlaying && !connectedRef.current) {
-      connectAudio();
-    }
+    if (audioElement && isPlaying && !connectedRef.current) connectAudio();
   }, [audioElement, isPlaying, connectAudio]);
 
-  // Visualizer drawing
   useEffect(() => {
     const canvas = canvasRef.current;
     const analyser = analyserRef.current;
     if (!canvas || !analyser) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
 
     const draw = () => {
       animFrameRef.current = requestAnimationFrame(draw);
       analyser.getByteFrequencyData(dataArray);
-
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       const barWidth = (canvas.width / bufferLength) * 2;
       let x = 0;
-
       for (let i = 0; i < bufferLength; i++) {
         const barHeight = (dataArray[i] / 255) * canvas.height;
-
         const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
-        gradient.addColorStop(0, "hsl(36, 100%, 55%)");
-        gradient.addColorStop(0.5, "hsl(24, 80%, 55%)");
-        gradient.addColorStop(1, "hsl(270, 60%, 55%)");
-
+        gradient.addColorStop(0, "rgba(255,255,255,0.1)");
+        gradient.addColorStop(0.5, "rgba(255,255,255,0.25)");
+        gradient.addColorStop(1, "rgba(255,255,255,0.5)");
         ctx.fillStyle = gradient;
         ctx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight);
-
-        ctx.shadowColor = "hsl(36, 100%, 55%)";
-        ctx.shadowBlur = 4;
-
         x += barWidth;
       }
     };
-
     draw();
-
-    return () => {
-      cancelAnimationFrame(animFrameRef.current);
-    };
+    return () => cancelAnimationFrame(animFrameRef.current);
   }, [isConnected, isPlaying]);
 
   const handleGainChange = (index: number, value: number) => {
@@ -133,10 +105,7 @@ const Equalizer = () => {
     newGains[index] = value;
     setGains(newGains);
     setActivePreset("");
-
-    if (filtersRef.current[index]) {
-      filtersRef.current[index].gain.value = value;
-    }
+    if (filtersRef.current[index]) filtersRef.current[index].gain.value = value;
   };
 
   const applyPreset = (name: string) => {
@@ -145,51 +114,32 @@ const Equalizer = () => {
     setGains(preset);
     setActivePreset(name);
     preset.forEach((g, i) => {
-      if (filtersRef.current[i]) {
-        filtersRef.current[i].gain.value = g;
-      }
+      if (filtersRef.current[i]) filtersRef.current[i].gain.value = g;
     });
   };
 
-  const resetEQ = () => applyPreset("Flat");
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="space-y-6"
-    >
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-display text-2xl font-bold text-foreground">Equalizer</h2>
+        <h2 className="text-2xl font-semibold text-foreground">Equalizer</h2>
         <button
-          onClick={resetEQ}
-          className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
+          onClick={() => applyPreset("Flat")}
+          className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
         >
           <RotateCcw size={14} />
           Reset
         </button>
       </div>
 
-      {/* Visualizer */}
-      <div className="rounded-xl bg-card border border-border p-4 neon-border">
-        <canvas
-          ref={canvasRef}
-          width={600}
-          height={120}
-          className="w-full h-[120px] rounded-lg"
-        />
+      <div className="rounded-2xl glass-card p-4">
+        <canvas ref={canvasRef} width={600} height={120} className="w-full h-[120px] rounded-xl" />
         {!isConnected && (
-          <p className="text-xs text-muted-foreground text-center mt-2">
-            Play a track to activate the visualizer
-          </p>
+          <p className="text-xs text-muted-foreground text-center mt-2">Play a track to activate the visualizer</p>
         )}
       </div>
 
-      {/* Presets */}
       <div>
-        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-          Presets
-        </p>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-3">Presets</p>
         <div className="flex gap-2 flex-wrap">
           {Object.keys(PRESETS).map((name) => (
             <button
@@ -197,7 +147,7 @@ const Equalizer = () => {
               onClick={() => applyPreset(name)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                 activePreset === name
-                  ? "bg-primary text-primary-foreground neon-glow"
+                  ? "bg-foreground text-background"
                   : "bg-muted text-muted-foreground hover:text-foreground hover:bg-surface-hover"
               }`}
             >
@@ -207,16 +157,14 @@ const Equalizer = () => {
         </div>
       </div>
 
-      {/* EQ Sliders */}
-      <div className="rounded-xl bg-card border border-border p-6">
-        <div className="flex items-end justify-between gap-4">
+      <div className="rounded-2xl glass-card p-6">
+        <div className="flex items-end justify-between gap-2 sm:gap-4">
           {EQ_BANDS.map((band, i) => (
             <div key={band.freq} className="flex flex-col items-center gap-3 flex-1">
-              <span className="text-xs font-mono text-primary">
-                {gains[i] > 0 ? "+" : ""}
-                {gains[i]}
+              <span className="text-xs font-mono text-foreground/70">
+                {gains[i] > 0 ? "+" : ""}{gains[i]}
               </span>
-              <div className="h-40 flex items-center">
+              <div className="h-32 sm:h-40 flex items-center">
                 <Slider
                   orientation="vertical"
                   value={[gains[i]]}
@@ -224,21 +172,13 @@ const Equalizer = () => {
                   max={12}
                   step={1}
                   onValueChange={([v]) => handleGainChange(i, v)}
-                  className="h-full [&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:shadow-[0_0_8px_hsl(186_100%_50%/0.5)] [&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_.range]:bg-primary"
+                  className="h-full [&_[role=slider]]:bg-foreground [&_[role=slider]]:border-foreground [&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_.range]:bg-foreground"
                 />
               </div>
               <span className="text-[10px] text-muted-foreground font-mono">{band.label}</span>
-              <span className="text-[8px] text-muted-foreground/50">Hz</span>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* dB scale reference */}
-      <div className="flex justify-between text-[10px] text-muted-foreground/50 px-2">
-        <span>-12 dB</span>
-        <span>0 dB</span>
-        <span>+12 dB</span>
       </div>
     </motion.div>
   );

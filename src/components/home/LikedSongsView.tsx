@@ -9,16 +9,12 @@ const LikedSongsView = () => {
 
   return (
     <div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="flex items-center gap-3 mb-6"
-      >
-        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-neon-blue flex items-center justify-center neon-glow">
-          <Heart size={22} className="text-primary-foreground" />
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-3 mb-6">
+        <div className="w-12 h-12 rounded-xl bg-foreground/10 flex items-center justify-center glass-card">
+          <Heart size={22} className="text-foreground" />
         </div>
         <div>
-          <h2 className="font-display text-xl font-bold text-foreground">Liked Songs</h2>
+          <h2 className="text-xl font-semibold text-foreground">Liked Songs</h2>
           <p className="text-sm text-muted-foreground">{liked.length} tracks</p>
         </div>
       </motion.div>
