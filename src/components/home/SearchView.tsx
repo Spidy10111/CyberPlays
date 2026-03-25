@@ -33,7 +33,7 @@ const SearchView = () => {
             placeholder="Search tracks, artists, albums..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 rounded-lg bg-muted border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:border-primary focus:neon-border transition-all"
+            className="w-full pl-10 pr-4 py-3 rounded-xl glass-input text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-1 focus:ring-foreground/20 transition-all"
           />
         </div>
       </motion.div>
@@ -45,7 +45,7 @@ const SearchView = () => {
             onClick={() => setGenre(g)}
             className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
               genre === g
-                ? "bg-primary text-primary-foreground neon-glow"
+                ? "bg-foreground text-background"
                 : "bg-muted text-muted-foreground hover:text-foreground hover:bg-surface-hover"
             }`}
           >
