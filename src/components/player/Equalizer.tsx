@@ -107,15 +107,15 @@ const Equalizer = () => {
         const barHeight = (dataArray[i] / 255) * canvas.height;
 
         const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
-        gradient.addColorStop(0, "hsl(36, 100%, 55%)");
-        gradient.addColorStop(0.5, "hsl(24, 80%, 55%)");
-        gradient.addColorStop(1, "hsl(270, 60%, 55%)");
+        gradient.addColorStop(0, "hsl(0, 0%, 60%)");
+        gradient.addColorStop(0.5, "hsl(0, 0%, 80%)");
+        gradient.addColorStop(1, "hsl(0, 0%, 100%)");
 
         ctx.fillStyle = gradient;
         ctx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight);
 
-        ctx.shadowColor = "hsl(36, 100%, 55%)";
-        ctx.shadowBlur = 4;
+        ctx.shadowColor = "hsl(0, 0%, 70%)";
+        ctx.shadowBlur = 3;
 
         x += barWidth;
       }
@@ -160,10 +160,10 @@ const Equalizer = () => {
       className="space-y-6"
     >
       <div className="flex items-center justify-between">
-        <h2 className="font-display text-2xl font-bold text-foreground">Equalizer</h2>
+        <h2 className="text-2xl font-semibold text-foreground tracking-tight">Equalizer</h2>
         <button
           onClick={resetEQ}
-          className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
+          className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
         >
           <RotateCcw size={14} />
           Reset
@@ -171,7 +171,7 @@ const Equalizer = () => {
       </div>
 
       {/* Visualizer */}
-      <div className="rounded-xl bg-card border border-border p-4 neon-border">
+      <div className="rounded-2xl glass p-4">
         <canvas
           ref={canvasRef}
           width={600}
@@ -197,8 +197,8 @@ const Equalizer = () => {
               onClick={() => applyPreset(name)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                 activePreset === name
-                  ? "bg-primary text-primary-foreground neon-glow"
-                  : "bg-muted text-muted-foreground hover:text-foreground hover:bg-surface-hover"
+                  ? "bg-foreground text-background"
+                  : "bg-secondary text-muted-foreground hover:text-foreground"
               }`}
             >
               {name}
@@ -208,11 +208,11 @@ const Equalizer = () => {
       </div>
 
       {/* EQ Sliders */}
-      <div className="rounded-xl bg-card border border-border p-6">
+      <div className="rounded-2xl glass p-6">
         <div className="flex items-end justify-between gap-4">
           {EQ_BANDS.map((band, i) => (
             <div key={band.freq} className="flex flex-col items-center gap-3 flex-1">
-              <span className="text-xs font-mono text-primary">
+              <span className="text-xs font-mono text-foreground">
                 {gains[i] > 0 ? "+" : ""}
                 {gains[i]}
               </span>
@@ -224,7 +224,7 @@ const Equalizer = () => {
                   max={12}
                   step={1}
                   onValueChange={([v]) => handleGainChange(i, v)}
-                  className="h-full [&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:shadow-[0_0_8px_hsl(186_100%_50%/0.5)] [&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_.range]:bg-primary"
+                  className="h-full [&_[role=slider]]:bg-foreground [&_[role=slider]]:border-foreground [&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_.range]:bg-foreground"
                 />
               </div>
               <span className="text-[10px] text-muted-foreground font-mono">{band.label}</span>
