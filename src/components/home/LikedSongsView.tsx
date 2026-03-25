@@ -18,7 +18,7 @@ const LikedSongsView = () => {
           <Heart size={22} className="text-foreground" />
         </div>
         <div>
-          <h2 className="font-display text-xl font-bold text-foreground">Liked Songs</h2>
+          <h2 className="text-xl font-semibold text-foreground tracking-tight">Liked Songs</h2>
           <p className="text-sm text-muted-foreground">{liked.length} tracks</p>
         </div>
       </motion.div>
