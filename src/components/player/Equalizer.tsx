@@ -160,7 +160,7 @@ const Equalizer = () => {
       className="space-y-6"
     >
       <div className="flex items-center justify-between">
-        <h2 className="font-display text-2xl font-bold text-foreground">Equalizer</h2>
+        <h2 className="text-2xl font-semibold text-foreground tracking-tight">Equalizer</h2>
         <button
           onClick={resetEQ}
           className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
