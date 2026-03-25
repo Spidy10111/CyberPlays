@@ -224,7 +224,7 @@ const Equalizer = () => {
                   max={12}
                   step={1}
                   onValueChange={([v]) => handleGainChange(i, v)}
-                  className="h-full [&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:shadow-[0_0_8px_hsl(186_100%_50%/0.5)] [&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_.range]:bg-primary"
+                  className="h-full [&_[role=slider]]:bg-foreground [&_[role=slider]]:border-foreground [&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_.range]:bg-foreground"
                 />
               </div>
               <span className="text-[10px] text-muted-foreground font-mono">{band.label}</span>
