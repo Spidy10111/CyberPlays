@@ -107,15 +107,14 @@ const Equalizer = () => {
         const barHeight = (dataArray[i] / 255) * canvas.height;
 
         const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
-        gradient.addColorStop(0, "hsl(186, 100%, 50%)");
-        gradient.addColorStop(0.5, "hsl(220, 100%, 60%)");
-        gradient.addColorStop(1, "hsl(243, 100%, 50%)");
+        gradient.addColorStop(0, "hsl(36, 100%, 55%)");
+        gradient.addColorStop(0.5, "hsl(24, 80%, 55%)");
+        gradient.addColorStop(1, "hsl(270, 60%, 55%)");
 
         ctx.fillStyle = gradient;
         ctx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight);
 
-        // Glow effect
-        ctx.shadowColor = "hsl(186, 100%, 50%)";
+        ctx.shadowColor = "hsl(36, 100%, 55%)";
         ctx.shadowBlur = 4;
 
         x += barWidth;
