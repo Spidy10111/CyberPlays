@@ -163,7 +163,7 @@ const Equalizer = () => {
         <h2 className="text-2xl font-semibold text-foreground tracking-tight">Equalizer</h2>
         <button
           onClick={resetEQ}
-          className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
+          className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
         >
           <RotateCcw size={14} />
           Reset
