@@ -197,8 +197,8 @@ const Equalizer = () => {
               onClick={() => applyPreset(name)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                 activePreset === name
-                  ? "bg-primary text-primary-foreground neon-glow"
-                  : "bg-muted text-muted-foreground hover:text-foreground hover:bg-surface-hover"
+                  ? "bg-foreground text-background"
+                  : "bg-secondary text-muted-foreground hover:text-foreground"
               }`}
             >
               {name}
