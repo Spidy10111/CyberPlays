@@ -41,6 +41,51 @@ export type Database = {
         }
         Relationships: []
       }
+      songs: {
+        Row: {
+          album: string
+          artist: string
+          audio_url: string
+          cover_url: string | null
+          created_at: string
+          duration: number
+          genre: string
+          id: string
+          plays: number
+          title: string
+          updated_at: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          album?: string
+          artist: string
+          audio_url: string
+          cover_url?: string | null
+          created_at?: string
+          duration?: number
+          genre?: string
+          id?: string
+          plays?: number
+          title: string
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          album?: string
+          artist?: string
+          audio_url?: string
+          cover_url?: string | null
+          created_at?: string
+          duration?: number
+          genre?: string
+          id?: string
+          plays?: number
+          title?: string
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
