@@ -28,6 +28,7 @@ interface PlayerContextType extends PlayerState {
   toggleRepeat: () => void;
   toggleLike: (id: string) => void;
   tracks: Track[];
+  audioElement: HTMLAudioElement | null;
 }
 
 const PlayerContext = createContext<PlayerContextType | null>(null);
@@ -40,6 +41,7 @@ export const usePlayer = () => {
 
 export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
   const [tracks, setTracks] = useState<Track[]>(sampleTracks);
   const [state, setState] = useState<PlayerState>({
     currentTrack: null,
@@ -55,7 +57,9 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   useEffect(() => {
     const audio = new Audio();
+    audio.crossOrigin = "anonymous";
     audioRef.current = audio;
+    setAudioElement(audio);
 
     audio.addEventListener("timeupdate", () => {
       setState((s) => ({ ...s, progress: audio.currentTime, duration: audio.duration || 0 }));
@@ -187,6 +191,7 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         toggleRepeat,
         toggleLike,
         tracks,
+        audioElement,
       }}
     >
       {children}

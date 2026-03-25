@@ -1,5 +1,5 @@
-import { Home, Search, Library, Heart, ListMusic, Radio, Settings } from "lucide-react";
-import { motion } from "framer-motion";
+import { Home, Search, Library, Heart, ListMusic, Radio, SlidersHorizontal } from "lucide-react";
+import ThemeToggle from "@/components/layout/ThemeToggle";
 
 interface SidebarProps {
   activeTab: string;
@@ -15,7 +15,7 @@ const navItems = [
 const libraryItems = [
   { id: "liked", label: "Liked Songs", icon: Heart },
   { id: "playlists", label: "Playlists", icon: ListMusic },
-  { id: "radio", label: "Radio", icon: Radio },
+  { id: "equalizer", label: "Equalizer", icon: SlidersHorizontal },
 ];
 
 const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
@@ -79,10 +79,7 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
       {/* Bottom */}
       <div className="mt-auto px-3">
         <div className="h-px bg-border mb-3" />
-        <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-surface-hover transition-all">
-          <Settings size={16} />
-          Settings
-        </button>
+        <ThemeToggle />
       </div>
     </aside>
   );
