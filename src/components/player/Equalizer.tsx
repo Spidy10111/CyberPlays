@@ -212,7 +212,7 @@ const Equalizer = () => {
         <div className="flex items-end justify-between gap-4">
           {EQ_BANDS.map((band, i) => (
             <div key={band.freq} className="flex flex-col items-center gap-3 flex-1">
-              <span className="text-xs font-mono text-primary">
+              <span className="text-xs font-mono text-foreground">
                 {gains[i] > 0 ? "+" : ""}
                 {gains[i]}
               </span>
