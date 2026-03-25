@@ -137,8 +137,8 @@
 
   .glass-surface {
     background: linear-gradient(135deg, 
-      hsl(240 80% 4% / 0.9), 
-      hsl(240 60% 8% / 0.7));
+      hsl(var(--surface) / 0.9), 
+      hsl(var(--surface-hover) / 0.7));
     backdrop-filter: blur(20px);
   }
 
